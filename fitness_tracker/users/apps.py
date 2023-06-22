@@ -6,7 +6,7 @@ class UsersConfig(AppConfig):
     name = "fitness_tracker.users"
     verbose_name = _("Users")
 
-    def ready(self):
+    def ready(self):  # noqa
         try:
             import fitness_tracker.users.signals  # noqa: F401
         except ImportError:
