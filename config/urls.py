@@ -53,3 +53,7 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
+admin.site.site_header = "Messiah Sports Foundation"
+admin.site.site_title = "Messiah Sports Foundation Portal"
+admin.site.index_title = "Welcome to Messiah Sports Foundation Portal"
