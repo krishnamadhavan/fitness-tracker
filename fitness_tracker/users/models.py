@@ -36,7 +36,7 @@ class User(AbstractUser):
 
 class FitnessProfile(models.Model):
     user = models.OneToOneField(
-        to=User, verbose_name=_("User Profile"), on_delete=models.CASCADE, related_name="userprofile"
+        to=User, verbose_name=_("Fitness Profile"), on_delete=models.CASCADE, related_name="fitness_profile"
     )
     gender = models.CharField(
         _("Gender"),
