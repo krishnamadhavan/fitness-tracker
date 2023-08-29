@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from fitness_tracker.users.abstract.models import GenderChoices, MobileNumberField
+from fitness_tracker.users.abstract.models import GenderChoices, MobileNumberField, FitnessGoalChoices
 from fitness_tracker.users.validators import validate_date_of_birth
 
 
@@ -34,14 +34,32 @@ class User(AbstractUser):
         return reverse("users:detail", kwargs={"username": self.username})
 
 
-class UserProfile(models.Model):
+class FitnessProfile(models.Model):
     user = models.OneToOneField(
         to=User, verbose_name=_("User Profile"), on_delete=models.CASCADE, related_name="userprofile"
     )
-    gender = models.CharField(_("Gender"), max_length=11, choices=GenderChoices.CHOICES, default=GenderChoices.MALE)
-    date_of_birth = models.DateField(_("Date of Birth"), validators=[validate_date_of_birth])
-    age = models.PositiveIntegerField(_("Age in years"), null=True, blank=True)
-    contact_number = MobileNumberField(_("Mobile Number of the User"))
+    gender = models.CharField(
+        _("Gender"),
+        max_length=11,
+        choices=GenderChoices.CHOICES,
+        default=GenderChoices.MALE,
+        help_text=_("Select the gender of the user.")
+    )
+    date_of_birth = models.DateField(
+        _("Date of Birth"),
+        validators=[validate_date_of_birth],
+        help_text=_("Enter the date of birth of the user.")
+    )
+    age = models.PositiveIntegerField(
+        _("Age in years"),
+        null=True,
+        blank=True,
+        help_text=_("The calculated age of the user in years.")
+    )
+    contact_number = MobileNumberField(
+        verbose_name=_("Mobile Number of the User"),
+        help_text=_("Enter the mobile number of the user.")
+    )
     height = models.PositiveIntegerField(
         _("Height (cm)"),
         help_text='Enter your height in centimeters.',
@@ -61,6 +79,19 @@ class UserProfile(models.Model):
         help_text='Calculated Body Mass Index (BMI). Automatically populated.',
         blank=True,
         null=True
+    )
+    joining_date = models.DateField(
+        _("Joining Date"),
+        help_text=_("Enter the date when the user joined."),
+        null=True,
+        blank=True
+    )
+    goal = models.CharField(
+        _("Fitness Goal"),
+        max_length=2,
+        choices=FitnessGoalChoices.CHOICES,
+        default=FitnessGoalChoices.GENERAL_FITNESS,
+        help_text=_("Select the fitness goal of the user.")
     )
 
     def calculate_age(self) -> int:

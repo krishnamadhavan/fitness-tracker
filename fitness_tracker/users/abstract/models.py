@@ -42,6 +42,48 @@ class GenderChoices:
     )
 
 
+class FitnessGoalChoices:
+    """
+        A class defining choices for fitness goals in a Django model.
+
+        This class provides a set of predefined choices for representing fitness
+        goals in a model. These choices can be used in a CharField with choices
+        to ensure consistent and meaningful representation of fitness goal data.
+
+        Example usage:
+        ```
+        class FitnessProfile(models.Model):
+            goal = models.CharField(
+                max_length=2,
+                choices=FitnessGoalChoices.CHOICES,
+                default=FitnessGoalChoices.GENERAL_FITNESS,
+            )
+        ```
+
+        Attributes:
+            WEIGHT_LOSS: A string representing the 'Weight Loss' fitness goal.
+            GENERAL_FITNESS: A string representing the 'General Fitness' goal.
+            SPORTS_FITNESS: A string representing the 'Sports Fitness' goal.
+            WEIGHT_GAIN: A string representing the 'Weight Gain' fitness goal.
+            BODY_RECOMPOSITION: A string representing the 'Body Recomposition' goal.
+            CHOICES: A tuple of tuples containing all available fitness goal choices.
+
+        """
+    WEIGHT_LOSS = "WL"
+    GENERAL_FITNESS = "GF"
+    SPORTS_FITNESS = "SF"
+    WEIGHT_GAIN = "WG"
+    BODY_RECOMPOSITION = "BR"
+
+    CHOICES = (
+        (WEIGHT_LOSS, _("Weight Loss")),
+        (GENERAL_FITNESS, _("General Fitness")),
+        (SPORTS_FITNESS, _("Sports Fitness")),
+        (WEIGHT_GAIN, _("Weight Gain")),
+        (BODY_RECOMPOSITION, _("Body Recomposition"))
+    )
+
+
 class MobileNumberField(models.CharField):
     """
         A custom Django model field for storing mobile numbers.
